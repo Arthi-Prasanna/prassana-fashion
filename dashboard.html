@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Phase-1 Dashboard - Prassannaa Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #FF5252;
+            --info: #2196F3;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            background: #f4f7fe;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 3rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            color: #718096;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover {
+            background: #f7fafc;
+            color: var(--secondary-color);
+        }
+
+        .nav-link.active {
+            background: var(--secondary-color);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(161, 52, 235, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2.5rem 3.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-top h1 {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Dashboard Components */
+        .card-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .data-card {
+            background: #fff;
+            padding: 1.8rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-card .label {
+            color: #a3aed0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .data-card .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .data-card .trend {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .trend.up {
+            color: var(--success);
+        }
+
+        /* Table Components */
+        .table-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: #a3aed0;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        td {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-paid {
+            background: #e6fffa;
+            color: #38b2ac;
+        }
+
+        .status-pending {
+            background: #fffaf0;
+            color: #dd6b20;
+        }
+
+        .btn-action {
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover {
+            background: #f7fafc;
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Feature Icons */
+        .icon-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .bg-purple {
+            background: rgba(161, 52, 235, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .bg-blue {
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 90px;
+                padding: 2rem 1rem;
+            }
+
+            .sidebar span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 90px;
+                padding: 2rem;
+            }
+
+            .card-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding-bottom: 5px;
+            }
+
+            .nav-link {
+                white-space: nowrap;
+                margin-bottom: 0;
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-link i {
+                font-size: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .card-row {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-logo {
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-top>div:last-child {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .data-card .value {
+                font-size: 1.5rem;
+            }
+
+            .table-container {
+                padding: 1.2rem;
+                overflow-x: auto;
+            }
+
+            th,
+            td {
+                min-width: 120px;
+                font-size: 0.85rem;
+            }
+
+            .icon-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="index.html" class="logo-text" style="font-size: 1.8rem;">PRASSANNAA</a>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-link active" onclick="showTab('overview')">
+                    <i>📊</i> <span>Project Overview</span>
+                </button>
+                <button class="nav-link" onclick="showTab('homepage')">
+                    <i>🏠</i> <span>Web Analytics</span>
+                </button>
+                <button class="nav-link" onclick="showTab('registration')">
+                    <i>📝</i> <span>Students CRM</span>
+                </button>
+                <button class="nav-link" onclick="showTab('payments')">
+                    <i>💳</i> <span>Revenue Logs</span>
+                </button>
+                <button class="nav-link" onclick="showTab('webinar')">
+                    <i>🎥</i> <span>Live Sessions</span>
+                </button>
+                <button class="nav-link" onclick="showTab('admin')">
+                    <i>⚙️</i> <span>System Settings</span>
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <a href="index.html" class="nav-link" style="color: var(--danger);">
+                    <i>🚪</i> <span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header-top">
+                <div>
+                    <h1 id="tab-title">Project Overview</h1>
+                    <p id="tab-subtitle" style="color: #718096; font-weight: 500;">Monitor your fashion institute's
+                        development progress.</p>
+                </div>
+                <div
+                    style="background: #fff; padding: 0.8rem 1.5rem; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 10px; height: 10px; background: var(--success); border-radius: 50%;"></div>
+                    <span style="font-weight: 700; font-size: 0.9rem;">Dev Environment: LIVE</span>
+                </div>
+            </header>
+
+            <!-- TAB: OVERVIEW -->
+            <div id="tab-overview" class="tab-content active">
+                <div class="card-row">
+                    <div class="data-card">
+                        <span class="label">Total Potential Revenue</span>
+                        <span class="value">₹0.00</span>
+                        <span class="trend up">Launch Target: ₹5.5L</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Total Enrollments</span>
+                        <span class="value">0</span>
+                        <span class="trend">Expected: 150/mo</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Build Progress</span>
+                        <span class="value">12.5%</span>
+                        <span class="trend up">↑ 5% this week</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Server Status</span>
+                        <span class="value">Active</span>
+                        <span class="trend" style="color: var(--info);">Vercel Auto-deploy ON</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3 style="margin-bottom: 1.5rem;">Development Roadmap (Sprint 1)</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Timeline</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="display: flex; align-items: center;">
+                                        <div class="icon-circle bg-purple">🏠</div> Launch Landing Page
+                                    </td>
+                                    <td><span class="status-badge" style="background:#e8f5e9; color:#2e7d32;">In
+                                            Progress</span></td>
+                                    <td><span style="color:var(--danger); font-weight:700;">High</span></td>
+                                    <td>Week 1-2</td>
+                                    <td><button class="btn-action" onclick="showTab('homepage')">Manage</button></td>
+                                </tr>
+                                <tr>
+                                    <td style="display: flex; align-items: center;">
+                                        <div class="icon-circle bg-blue">💳</div> Razorpay Integration
+                                    </td>
+                                    <td><span class="status-badge status-pending">Planned</span></td>
+                                    <td><span style="color:var(--danger); font-weight:700;">High</span></td>
+                                    <td>Week 3</td>
+                                    <td><button class="btn-action" onclick="showTab('payments')">Configure</button></td>
+                                </tr>
+                                <tr>
+                                    <td style="display: flex; align-items: center;">
+                                        <div class="icon-circle bg-purple">🎥</div> Webinar Sandbox
+                                    </td>
+                                    <td><span class="status-badge status-pending">Planned</span></td>
+                                    <td>Medium</td>
+                                    <td>Week 4</td>
+                                    <td><button class="btn-action" onclick="showTab('webinar')">Test</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: HOMEPAGE (Analytics Dashboard) -->
+            <div id="tab-homepage" class="tab-content">
+                <div class="card-row">
+                    <div class="data-card">
+                        <span class="label">Unique Visitors</span>
+                        <span class="value">1,240</span>
+                        <span class="trend up">+15% vs yesterday</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">CTA Click Rate</span>
+                        <span class="value">4.2%</span>
+                        <span class="trend">Target: 8.0%</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Bounce Rate</span>
+                        <span class="value">32%</span>
+                        <span class="trend" style="color: var(--success);">Healthy</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Mobile Traffic</span>
+                        <span class="value">78%</span>
+                        <span class="trend">Optimized</span>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <h3 style="margin-bottom: 2rem;">Page Component Management</h3>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="border: 1px dashed #e0e0e0; padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="margin-bottom: 0.5rem;">Hero Section</h4>
+                            <p id="hero-status" style="font-size: 0.85rem; color: #718096;">Latest: Video Background</p>
+                            <button class="btn-action" style="margin-top: 1rem; width:100%;"
+                                onclick="mockAction('Opening Design Editor: Hero Section')">Edit Design</button>
+                        </div>
+                        <div style="border: 1px dashed #e0e0e0; padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="margin-bottom: 0.5rem;">Program Grid</h4>
+                            <h2 style="font-size: 1.2rem; color: var(--secondary-color);">3 Active Plans</h2>
+                            <button class="btn-action" style="margin-top: 1rem; width:100%;"
+                                onclick="mockAction('Opening Card Manager: 3 Active Plans')">Manage Cards</button>
+                        </div>
+                        <div style="border: 1px dashed #e0e0e0; padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="margin-bottom: 0.5rem;">Lead Magnet</h4>
+                            <p id="lead-status-text" style="font-size: 0.85rem; color: #718096;">Free Webinar Popup</p>
+                            <button id="lead-toggle-btn" class="btn-action"
+                                style="margin-top: 1rem; width:100%; background: #e6fffa; color: #38b2ac; border-color: #38b2ac;"
+                                onclick="toggleLeadMagnet()">Toggle ON</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: REGISTRATION (CRM Dashboard) -->
+            <div id="tab-registration" class="tab-content">
+                <div class="header-top" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <h3>Recent Enquiries</h3>
+                        <input type="text" id="crm-search" placeholder="Search students..."
+                            style="padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid #e0e0e0; font-size: 0.85rem;"
+                            onkeyup="filterCRM()">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-action"
+                            style="border-color: var(--secondary-color); color: var(--secondary-color);"
+                            onclick="mockAction('Form to add new student opened')">+ New Enquiry</button>
+                        <button class="btn-primary"
+                            style="padding: 0.6rem 1.2rem; border-radius: 12px; font-size: 0.8rem;"
+                            onclick="mockAction('Generating CSV for 2 students... Download started!')">Export to
+                            CSV</button>
+                    </div>
+                </div>
+                <div class="table-container" style="margin-top: 0;">
+                    <div class="table-responsive">
+                        <table id="crm-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>WhatsApp No.</th>
+                                    <th>Course Interested</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="crm-row">
+                                    <td class="s-name">Ananya Sharma</td>
+                                    <td>+91 98XXX XXX12</td>
+                                    <td>Bridal Couture</td>
+                                    <td><span class="status-badge" style="background:#fff5f5; color:#c53030;">Hot
+                                            Lead</span></td>
+                                    <td style="display: flex; gap: 5px;">
+                                        <button class="btn-action"
+                                            onclick="mockAction('Dialing Ananya Sharma...')">Call</button>
+                                        <button class="btn-action" onclick="deleteRow(this)">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="crm-row">
+                                    <td class="s-name">Riya Patel</td>
+                                    <td>+91 91XXX XXX45</td>
+                                    <td>Foundation</td>
+                                    <td><span class="status-badge" style="background:#ebf8ff; color:#2b6cb0;">In
+                                            Dialogue</span></td>
+                                    <td style="display: flex; gap: 5px;">
+                                        <button class="btn-action"
+                                            onclick="mockAction('Sending WhatsApp to Riya Patel...')">WA</button>
+                                        <button class="btn-action" onclick="deleteRow(this)">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: PAYMENTS (Finance Dashboard) -->
+            <div id="tab-payments" class="tab-content">
+                <div class="card-row">
+                    <div class="data-card">
+                        <span class="label">Today's Sales</span>
+                        <span class="value">₹14,999</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Pending Settlements</span>
+                        <span class="value">₹0.00</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Refunds Issued</span>
+                        <span class="value">0</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="label">Razorpay Status</span>
+                        <span class="value" style="color: var(--success);">Online</span>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <h3 style="margin-bottom: 1.5rem;">Transaction Logs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>TXN ID</th>
+                                <th>Date</th>
+                                <th>Payment Mode</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#PAY-7721</td>
+                                <td>Jan 16, 2026</td>
+                                <td>UPI (PhonePe)</td>
+                                <td>₹14,999</td>
+                                <td><span class="status-badge status-paid">SUCCESS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: WEBINAR (Session Dashboard) -->
+            <div id="tab-webinar" class="tab-content">
+                <div class="detail-list"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="table-container" style="margin-top:0;">
+                        <h3 style="margin-bottom: 1.5rem;">Active Session Links</h3>
+                        <div style="background:#f7fafc; padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
+                            <span style="font-weight: 700; display: block;">Bridal Masterclass (Live)</span>
+                            <code
+                                style="display:block; margin: 0.5rem 0; word-break: break-all; font-size: 0.8rem;">zoom.us/j/1234567890</code>
+                            <button class="btn-action" style="width: 100%; margin-top: 0.5rem;"
+                                onclick="mockAction('Link copied to clipboard!')">Copy</button>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; padding: 1rem; border-radius: 12px;"
+                            onclick="mockAction('Creating Zoom Meeting... Done!')">Create New
+                            Session Link</button>
+                    </div>
+                    <div class="table-container" style="margin-top:0;">
+                        <h3 style="margin-bottom: 1.5rem;">Resource Library</h3>
+                        <ul style="list-style: none;">
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                <span>📄 Syllabus_2026.pdf</span>
+                                <button class="btn-action" onclick="mockAction('Asset Deleted')">Delete</button>
+                            </li>
+                            <li
+                                style="padding: 1rem 0; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                <span>🎞️ Embroidery_Guide.mp4</span>
+                                <button class="btn-action" onclick="mockAction('Asset Deleted')">Delete</button>
+                            </li>
+                        </ul>
+                        <button class="btn-action"
+                            style="width: 100%; margin-top: 1rem; padding: 1rem; border: 1px dashed var(--secondary-color); color: var(--secondary-color);"
+                            onclick="mockAction('Opening Upload Window...')">Upload
+                            New Asset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: ADMIN (System Dashboard) -->
+            <div id="tab-admin" class="tab-content">
+                <div class="table-container" style="margin-top: 0; max-width: 600px;">
+                    <h3 style="margin-bottom: 2rem;">Global Site Configuration</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 0.8rem;">Maintenance Mode</label>
+                        <div style="display: flex; gap: 1rem;">
+                            <button id="mnt-off" class="btn-action active-toggle"
+                                style="background:#f4f7fe; border:none; padding:1rem 2rem; background: var(--secondary-color); color: #fff;"
+                                onclick="toggleMaintenance(false)">OFF</button>
+                            <button id="mnt-on" class="btn-action" style="padding:1rem 2rem;"
+                                onclick="toggleMaintenance(true)">ON</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 0.8rem;">Razorpay API Key</label>
+                        <input type="password" value="rzp_live_XXXXXXXXXXXXXX"
+                            style="width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid #e0e0e0;"
+                            readonly>
+                    </div>
+                    <button class="btn-primary" style="width: 100%; padding: 1.2rem; border-radius: 15px;"
+                        onclick="mockAction('Global Settings Saved Successfully!')">Save Global
+                        Settings</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast"
+        style="position: fixed; bottom: 30px; right: 30px; background: #333; color: #fff; padding: 1rem 2rem; border-radius: 12px; display: none; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.3s ease;">
+        Action Performed
+    </div>
+
+    <script>
+        function mockAction(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        let isLeadOn = true;
+        function toggleLeadMagnet() {
+            const btn = document.getElementById('lead-toggle-btn');
+            const txt = document.getElementById('lead-status-text');
+            if (isLeadOn) {
+                btn.innerText = 'Toggle OFF';
+                btn.style.background = '#fff5f5';
+                btn.style.color = '#c53030';
+                btn.style.borderColor = '#c53030';
+                txt.style.opacity = '0.5';
+                mockAction('Lead Magnet (Webinar Popup): DISABLED');
+            } else {
+                btn.innerText = 'Toggle ON';
+                btn.style.background = '#e6fffa';
+                btn.style.color = '#38b2ac';
+                btn.style.borderColor = '#38b2ac';
+                txt.style.opacity = '1';
+                mockAction('Lead Magnet (Webinar Popup): ENABLED');
+            }
+            isLeadOn = !isLeadOn;
+        }
+
+        function toggleMaintenance(on) {
+            const offBtn = document.getElementById('mnt-off');
+            const onBtn = document.getElementById('mnt-on');
+            if (on) {
+                onBtn.style.background = 'var(--secondary-color)';
+                onBtn.style.color = '#fff';
+                offBtn.style.background = 'transparent';
+                offBtn.style.color = '#718096';
+                mockAction('MAINTENANCE MODE: ACTIVATED');
+            } else {
+                offBtn.style.background = 'var(--secondary-color)';
+                offBtn.style.color = '#fff';
+                onBtn.style.background = 'transparent';
+                onBtn.style.color = '#718096';
+                mockAction('MAINTENANCE MODE: DEACTIVATED');
+            }
+        }
+
+        function filterCRM() {
+            const query = document.getElementById('crm-search').value.toLowerCase();
+            const rows = document.querySelectorAll('.crm-row');
+            rows.forEach(row => {
+                const name = row.querySelector('.s-name').innerText.toLowerCase();
+                row.style.display = name.includes(query) ? '' : 'none';
+            });
+        }
+
+        function deleteRow(btn) {
+            const row = btn.closest('tr');
+            if (confirm('Are you sure you want to delete this enquiry?')) {
+                row.style.opacity = '0';
+                setTimeout(() => {
+                    row.remove();
+                    mockAction('Enquiry Record Deleted');
+                }, 300);
+            }
+        }
+
+        function showTab(tabId) {
+            // Update Active Link in Sidebar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Find the link that corresponds to this tabId
+            const sidebarLinks = document.querySelectorAll('.nav-link');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Toggle Contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeTab = document.getElementById('tab-' + tabId);
+            activeTab.classList.add('active');
+
+            // Update Header
+            const titleMap = {
+                'overview': 'Project Overview',
+                'homepage': 'Web Analytics',
+                'registration': 'Students CRM',
+                'payments': 'Revenue Logs',
+                'webinar': 'Live Sessions & Resources',
+                'admin': 'System Settings'
+            };
+            const subtitleMap = {
+                'overview': 'Monitor your fashion institute\'s development progress.',
+                'homepage': 'Track user engagement and conversion metrics.',
+                'registration': 'Manage student enquries and enrollment details.',
+                'payments': 'Review real-time transaction history and settlements.',
+                'webinar': 'Manage live meeting links and private course assets.',
+                'admin': 'Configure global site settings and backend credentials.'
+            };
+
+            document.getElementById('tab-title').innerText = titleMap[tabId];
+            document.getElementById('tab-subtitle').innerText = subtitleMap[tabId];
+
+            // Interaction Feedback
+            console.log(`Switched to ${tabId} Dashboard`);
+        }
+    </script>
+</body>
+
+</html>

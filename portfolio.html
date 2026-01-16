@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Prassannaa Fashion Designs & Institute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="portfolio-page">
+
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Prassannaa Fashion Logo" style="height: 50px;">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html" class="active">Portfolio</a></li>
+                <li><a href="index.html#programs">Courses</a></li>
+                <li><a href="index.html#webinars">Webinars</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+
+
+    <section class="section portfolio-hero-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Work</h2>
+                <p>Curated works spanning across bridal, couture, and student collaborations.</p>
+            </div>
+
+            <div style="margin-bottom: 3rem; text-align: center;">
+                <ul class="filter-list">
+                    <li class="filter-item active" data-filter="all" style="cursor: pointer;">All</li>
+                    <li class="filter-item" data-filter="bridal" style="cursor: pointer;">Bridal Wear</li>
+                    <li class="filter-item" data-filter="couture" style="cursor: pointer;">Couture</li>
+                    <li class="filter-item" data-filter="casual" style="cursor: pointer;">Casual</li>
+                    <li class="filter-item" data-filter="student" style="cursor: pointer;">Student Mentored</li>
+                </ul>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Row 1: Bridal -->
+                <div class="portfolio-item" data-category="bridal">
+                    <img src="bridal.png" alt="Bridal Wear">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">Royal Bridal Collection</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="couture">
+                    <img src="hero.png" alt="Couture">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">Modern Couture</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="casual">
+                    <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80"
+                        alt="Casual">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">Elegant Casuals</h4>
+                    </div>
+                </div>
+                <!-- Row 2: Student Mentored & Events -->
+                <div class="portfolio-item" data-category="student">
+                    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80"
+                        alt="Student Work">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">Student Mentored Works</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="couture">
+                    <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80"
+                        alt="Fashion Show">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">NIFT Fashion Show 2024</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="student">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80"
+                        alt="Exhibition">
+                    <div style="position: absolute; bottom: 20px; left: 20px; color: white;">
+                        <h4 style="font-family: serif;">Grand Exhibition</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #fff;">
+        <div class="container">
+            <div class="grid-2" style="align-items: center;">
+                <div class="designer-img"
+                    style="border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; background: #eee;">
+                    <img src="designer.png" alt="Smt. Lakshmi Prassanna"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div>
+                    <span
+                        style="text-transform: uppercase; letter-spacing: 2px; color: var(--secondary-color); font-weight: 700;">About
+                        the Designer</span>
+                    <h1 style="font-size: 3.5rem; margin: 1rem 0;">Smt. Lakshmi Prassanna Gollapudi</h1>
+                    <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+                        Prassannaa Fashion Institute was founded by Smt. Lakshmi Prassanna Gollapudi, a passionate
+                        fashion designer who completed her B.F. Tech in Fashion Design from NIFT Hyderabad. With over 15
+                        years of rich experience, she has trained thousands of women across the twin cities.
+                    </p>
+                    <div
+                        style="background: #f9f9f9; padding: 2rem; border-left: 5px solid var(--primary-color); border-radius: 0 15px 15px 0; margin-bottom: 2rem;">
+                        <p style="font-style: italic; font-size: 1.2rem; color: #333;">
+                            "When a woman becomes strong and independent, the entire family becomes strong."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Media & Events</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                <div class="card event-card" data-event="show" style="cursor: pointer;">
+                    <h4 style="margin-bottom: 1rem;">Annual Fashion Show</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Showcasing the latest bridal and wedding
+                        collections in Hyderabad.</p>
+                    <span
+                        style="display: inline-block; margin-top: 1rem; color: var(--secondary-color); font-weight: 600; font-size: 0.8rem;">View
+                        Details →</span>
+                </div>
+                <div class="card event-card" data-event="exhibition" style="cursor: pointer;">
+                    <h4 style="margin-bottom: 1rem;">Exhibitions</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Regular exhibitions at leading venues across
+                        the twin cities.</p>
+                    <span
+                        style="display: inline-block; margin-top: 1rem; color: var(--secondary-color); font-weight: 600; font-size: 0.8rem;">View
+                        Details →</span>
+                </div>
+                <div class="card event-card" data-event="press" style="cursor: pointer;">
+                    <h4 style="margin-bottom: 1rem;">Press Features</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Recognized by leading fashion and lifestyle
+                        magazines.</p>
+                    <span
+                        style="display: inline-block; margin-top: 1rem; color: var(--secondary-color); font-weight: 600; font-size: 0.8rem;">View
+                        Details →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #111; color: white; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 3rem; margin-bottom: 1rem;">Learn from me</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.8;">Enroll in our professional courses and
+                master the art of fashion design.</p>
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <h3 style="font-size: 2rem;">1 Month</h3>
+                    <p style="opacity: 0.6;">Short Intensive</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 2rem;">3 Months</h3>
+                    <p style="opacity: 0.6;">Standard Certification</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 2rem;">6 Months</h3>
+                    <p style="opacity: 0.6;">Professional Diploma</p>
+                </div>
+            </div>
+            <a href="index.html#programs" class="btn btn-primary">Enroll Now</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="logo-text">PRASSANNAA</h2>
+                    <p>Prassannaa Fashion Designs & Institute Pvt. Ltd. Empowering women through skill development and
+                        creative excellence.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="#">Foundation Course</a></li>
+                        <li><a href="#">Advanced Couture</a></li>
+                        <li><a href="index.html#webinars">webinar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>NIFT Hyderabad, India</li>
+                        <li>contact@prassannaa.com</li>
+                        <li>+91 98765 43210</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Prassannaa Fashion Designs & Institute Pvt. Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <!-- Event Details Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalBody">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
